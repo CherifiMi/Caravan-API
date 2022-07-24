@@ -8,6 +8,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.CoroutineDatabase
+import org.litote.kmongo.coroutine.replaceOne
 import org.litote.kmongo.eq
 
 
@@ -69,7 +70,10 @@ fun Route.buyers(collection: CoroutineCollection<Buyer>) {
 
         // change buyer
         put {
-            call.respondText("put buyers!")
+            call.parameters
+            val requestBody = call.receive<Buyer>()
+            val isSuccess = collection.replaceOne(requestBody).wasAcknowledged()
+            call.respond(isSuccess)
         }
 
         // delete by id
