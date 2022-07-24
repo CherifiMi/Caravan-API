@@ -1,11 +1,14 @@
 package com.example.plugins
 
 import com.example.models.Buyer
+import com.example.models.Id
 import io.ktor.server.routing.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.CoroutineDatabase
+
 
 fun Application.configureRouting(database: CoroutineDatabase) {
 
@@ -33,13 +36,19 @@ fun Route.buyers(collection: CoroutineCollection<Buyer>) {
 
         }
         post {
-            call.respondText("post buyers!")
+            call.parameters
+            val requestBody = call.receive<Buyer>()
+            val isSuccess = collection.insertOne(requestBody).wasAcknowledged()
+            call.respond(isSuccess)
         }
         put {
             call.respondText("put buyers!")
         }
         delete {
-            call.respondText("delete buyers!")
+            call.parameters
+            val requestBody = call.receive<Id>()
+            val isSuccess = collection.deleteOneById(requestBody.id).wasAcknowledged()
+            call.respond(isSuccess)
         }
     }
 }
