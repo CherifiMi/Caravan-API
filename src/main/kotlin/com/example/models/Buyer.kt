@@ -13,3 +13,5 @@ data class Buyer(
     val address: String,
     val isActive: Boolean
 )
+
+data class Id(val id: String)
