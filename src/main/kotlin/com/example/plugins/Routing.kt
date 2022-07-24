@@ -1,6 +1,7 @@
 package com.example.plugins
 
 import com.example.buyers
+import com.example.reps
 import com.example.sellers
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -20,6 +21,9 @@ fun Application.configureRouting(database: CoroutineDatabase) {
 
         buyers(database.getCollection("buyers"))
         sellers(database.getCollection("sellers"))
+        reps(database.getCollection("reps"))
     }}
 }
+
+
 
