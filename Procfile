@@ -1,0 +1,1 @@
+web: ./build/install/com.example.caravan_api/bin/com.example.caravan_api

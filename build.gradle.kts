@@ -7,7 +7,9 @@ plugins {
     kotlin("jvm") version "1.7.10"
                 id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
 }
-
+tasks {
+    create("stage").dependsOn("installDist")
+}
 group = "com.example"
 version = "0.0.1"
 application {
