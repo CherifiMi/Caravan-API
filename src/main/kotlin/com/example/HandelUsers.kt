@@ -215,7 +215,7 @@ fun Route.user_type(
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
-                call.respond(collection.findOne(UserIdToType::autheId eq requestBody.id)?.type ?: "no user")
+                call.respond(collection.findOne(UserIdToType::autheId eq requestBody.id).toString())
             } catch (e: Exception) {
                 call.respondText("ERROR: " + e.toString())
             }
