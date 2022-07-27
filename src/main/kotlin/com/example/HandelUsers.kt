@@ -210,7 +210,7 @@ fun Route.user_type(
     collection: CoroutineCollection<UserIdToType>
 ){
     //get by auth key
-    route("/reps") {
+    route("/type") {
         get{
             try {
                 call.parameters
