@@ -206,6 +206,20 @@ fun Route.reps(
     }
 }
 
-fun Route.user_type(collection1: CoroutineCollection<UserIdToType>){
+fun Route.user_type(
+    collection: CoroutineCollection<UserIdToType>
+){
+    //get by auth key
+    route("/reps") {
+        get{
+            try {
+                call.parameters
+                val requestBody = call.receive<Id>()
+                call.respond(collection.findOne(UserIdToType::autheId eq requestBody.id).toString())
+            } catch (e: Exception) {
+                call.respondText("ERROR: " + e.toString())
+            }
 
+        }
+    }
 }
