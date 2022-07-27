@@ -1,19 +1,20 @@
 package com.example
 
-import com.example.models.Buyer
-import com.example.models.Id
-import com.example.models.Rep
-import com.example.models.Seller
+import com.example.models.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.litote.kmongo.coroutine.CoroutineCollection
+import org.litote.kmongo.coroutine.insertOne
 import org.litote.kmongo.coroutine.replaceOne
 import org.litote.kmongo.eq
 
 
-fun Route.buyers(collection: CoroutineCollection<Buyer>) {
+fun Route.buyers(
+    collection: CoroutineCollection<Buyer>,
+    collection1: CoroutineCollection<UserIdToType>
+) {
     route("/buyers") {
         //get all
         get {
@@ -50,7 +51,10 @@ fun Route.buyers(collection: CoroutineCollection<Buyer>) {
         post {
             call.parameters
             val requestBody = call.receive<Buyer>()
-            val isSuccess = collection.insertOne(requestBody).wasAcknowledged()
+            val isSuccess =
+                collection.insertOne(requestBody).wasAcknowledged()
+                && collection1.insertOne(UserIdToType(type = "buyer", autheId = requestBody.autheId))
+                .wasAcknowledged()
             call.respond(isSuccess)
         }
 
@@ -72,7 +76,10 @@ fun Route.buyers(collection: CoroutineCollection<Buyer>) {
     }
 }
 
-fun Route.sellers(collection: CoroutineCollection<Seller>) {
+fun Route.sellers(
+    collection: CoroutineCollection<Seller>,
+    collection1: CoroutineCollection<UserIdToType>
+) {
     route("/sellers") {
         //get all
         get {
@@ -105,15 +112,18 @@ fun Route.sellers(collection: CoroutineCollection<Seller>) {
             }
 
         }
-        //create new buyer
+        //create new seller
         post {
             call.parameters
             val requestBody = call.receive<Seller>()
-            val isSuccess = collection.insertOne(requestBody).wasAcknowledged()
+            val isSuccess =
+                collection.insertOne(requestBody).wasAcknowledged()
+                && collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
+                    .wasAcknowledged()
             call.respond(isSuccess)
         }
 
-        // change buyer
+        // change seller
         put {
             call.parameters
             val requestBody = call.receive<Seller>()
@@ -131,8 +141,10 @@ fun Route.sellers(collection: CoroutineCollection<Seller>) {
     }
 }
 
-
-fun Route.reps(collection: CoroutineCollection<Rep>) {
+fun Route.reps(
+    collection: CoroutineCollection<Rep>,
+    collection1: CoroutineCollection<UserIdToType>
+) {
     route("/reps") {
         //get all
         get {
@@ -165,7 +177,7 @@ fun Route.reps(collection: CoroutineCollection<Rep>) {
             }
 
         }
-        //create new buyer
+        //create new rep
         post {
             call.parameters
             val requestBody = call.receive<Rep>()
@@ -173,11 +185,14 @@ fun Route.reps(collection: CoroutineCollection<Rep>) {
             call.respond(isSuccess)
         }
 
-        // change buyer
+        // change rep
         put {
             call.parameters
             val requestBody = call.receive<Rep>()
-            val isSuccess = collection.replaceOne(requestBody).wasAcknowledged()
+            val isSuccess =
+                collection.replaceOne(requestBody).wasAcknowledged()
+                && collection1.insertOne(UserIdToType(type = "rep", autheId = requestBody.autheId))
+                    .wasAcknowledged()
             call.respond(isSuccess)
         }
 
@@ -189,4 +204,8 @@ fun Route.reps(collection: CoroutineCollection<Rep>) {
             call.respond(isSuccess)
         }
     }
+}
+
+fun Route.user_type(collection1: CoroutineCollection<UserIdToType>){
+
 }

@@ -19,9 +19,9 @@ fun Application.configureRouting(database: CoroutineDatabase) {
     //______________caravan api v1
     routing { route("/v1"){
 
-        buyers(database.getCollection("buyers"))
-        sellers(database.getCollection("sellers"))
-        reps(database.getCollection("reps"))
+        buyers(database.getCollection("buyers"), database.getCollection("user_type"))
+        sellers(database.getCollection("sellers"), database.getCollection("user_type"))
+        reps(database.getCollection("reps"), database.getCollection("user_type"))
     }}
 }
 
