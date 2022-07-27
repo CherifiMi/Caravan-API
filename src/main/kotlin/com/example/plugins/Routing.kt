@@ -12,7 +12,7 @@ import org.litote.kmongo.coroutine.CoroutineDatabase
 
 fun Application.configureRouting(database: CoroutineDatabase) {
 
-    // heroku create ktor-sample-heroku
+    // git push heroku main
 
     routing {
         get("/") {
