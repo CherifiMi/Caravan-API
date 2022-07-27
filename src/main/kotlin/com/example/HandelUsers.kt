@@ -211,7 +211,7 @@ fun Route.user_type(
 ){
     //get by auth key
     route("/type") {
-        get{
+        post{
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
