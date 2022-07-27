@@ -8,6 +8,7 @@ data class product(
     val id: String= ObjectId().toString(),
     val imageId: String,
     val name: String,
+    val cat: List<String>,
     val content: String,
     val initPrice: Int,
     val newPrice: Int,
