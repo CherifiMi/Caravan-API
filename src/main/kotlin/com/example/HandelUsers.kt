@@ -53,8 +53,8 @@ fun Route.buyers(
             val requestBody = call.receive<Buyer>()
             val isSuccess =
                 collection.insertOne(requestBody).wasAcknowledged()
-                && collection1.insertOne(UserIdToType(type = "buyer", autheId = requestBody.autheId))
-                .wasAcknowledged()
+                        && collection1.insertOne(UserIdToType(type = "buyer", autheId = requestBody.autheId))
+                    .wasAcknowledged()
             call.respond(isSuccess)
         }
 
@@ -118,7 +118,7 @@ fun Route.sellers(
             val requestBody = call.receive<Seller>()
             val isSuccess =
                 collection.insertOne(requestBody).wasAcknowledged()
-                && collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
+                        && collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
                     .wasAcknowledged()
             call.respond(isSuccess)
         }
@@ -191,7 +191,7 @@ fun Route.reps(
             val requestBody = call.receive<Rep>()
             val isSuccess =
                 collection.replaceOne(requestBody).wasAcknowledged()
-                && collection1.insertOne(UserIdToType(type = "rep", autheId = requestBody.autheId))
+                        && collection1.insertOne(UserIdToType(type = "rep", autheId = requestBody.autheId))
                     .wasAcknowledged()
             call.respond(isSuccess)
         }
@@ -208,17 +208,18 @@ fun Route.reps(
 
 fun Route.user_type(
     collection: CoroutineCollection<UserIdToType>
-){
+) {
     //get by auth key
     route("/type") {
-        post{
-
+        get {
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
-                call.respondText(collection.findOne(UserIdToType::autheId eq requestBody.id)?.type ?: "nodata")
+                call.respondText(
+                    collection.findOne(UserIdToType::autheId eq requestBody.id)?.type ?: "user not available"
+                )
             } catch (e: Exception) {
-                call.respondText("ERROR: " + e.toString())
+                call.respondText("ERROR: $e")
             }
 
         }
