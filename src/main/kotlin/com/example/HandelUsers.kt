@@ -212,10 +212,11 @@ fun Route.user_type(
     //get by auth key
     route("/type") {
         post{
+
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
-                call.respond(collection.findOne(UserIdToType::autheId eq requestBody.id).toString())
+                call.respondText(collection.findOne(UserIdToType::autheId eq requestBody.id)?.type ?: "nodata")
             } catch (e: Exception) {
                 call.respondText("ERROR: " + e.toString())
             }
