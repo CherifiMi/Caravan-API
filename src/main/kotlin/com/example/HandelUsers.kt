@@ -181,7 +181,9 @@ fun Route.reps(
         post {
             call.parameters
             val requestBody = call.receive<Rep>()
-            val isSuccess = collection.insertOne(requestBody).wasAcknowledged()
+            val isSuccess =
+                collection.insertOne(requestBody).wasAcknowledged()
+                        && collection1.insertOne(UserIdToType(type = "rep", autheId = requestBody.autheId)).wasAcknowledged()
             call.respond(isSuccess)
         }
 
