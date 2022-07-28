@@ -28,10 +28,6 @@ fun Application.configureRouting(database: CoroutineDatabase) {
     //______________caravan api v1
     routing { route("/v1"){
 
-        install(ContentNegotiation) {
-            gson()
-        }
-
         buyers(database.getCollection("buyers"), database.getCollection("user_type"))
         sellers(database.getCollection("sellers"), database.getCollection("user_type"))
         reps(database.getCollection("reps"), database.getCollection("user_type"))
