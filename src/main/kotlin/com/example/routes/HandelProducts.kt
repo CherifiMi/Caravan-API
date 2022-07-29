@@ -52,9 +52,7 @@ fun Route.products(collection: CoroutineCollection<Product>) {
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
-                call.respond(
-                    listOf(collection.find(Product::sellerKey eq requestBody.id))
-                )
+                call.respond(collection.find(Product::sellerKey eq requestBody.id).toList())
             } catch (e: Exception) {
                 call.respondText("ERROR: $e")
             }

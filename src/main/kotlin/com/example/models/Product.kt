@@ -15,3 +15,4 @@ data class Product(
     val initPrice: Int,
     val newPrice: Int,
 )
+
