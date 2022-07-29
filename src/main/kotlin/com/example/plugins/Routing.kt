@@ -1,10 +1,6 @@
 package com.example.plugins
 
-import com.example.routes.buyers
-import com.example.routes.reps
-import com.example.routes.products
-import com.example.routes.sellers
-import com.example.routes.user_type
+import com.example.routes.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -30,6 +26,8 @@ fun Application.configureRouting(database: CoroutineDatabase) {
         user_type(database.getCollection("user_type"))
 
         products(database.getCollection("products"))
+
+        uploadFile()
     }}
 }
 
