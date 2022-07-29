@@ -11,8 +11,6 @@ data class Seller(
     val type: String,
     val autheId: String,
     val phone: String,
-    val productsId: List<String>,
-    val ordersId: List<String>,
     val isActive: Boolean
 )
 
