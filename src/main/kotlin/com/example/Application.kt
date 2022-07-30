@@ -14,8 +14,10 @@ val client = KMongo
 val database = client.getDatabase("caravan_db")
 fun main() {
     embeddedServer(Netty,  port = System.getenv("PORT").toInt()) {
-        configureSockets()
+        configureHTTP()
+        //configureMonitoring()
         configureSerialization()
+        configureSockets()
         configureRouting(database)
     }.start(wait = true)
 }
