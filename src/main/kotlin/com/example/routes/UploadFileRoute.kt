@@ -21,6 +21,7 @@ fun Route.uploadFile() {
                 else -> Unit
             }
         }
+
         call.respond(HttpStatusCode.OK)
     }
 }
