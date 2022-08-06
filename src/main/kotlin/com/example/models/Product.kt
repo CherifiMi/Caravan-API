@@ -14,5 +14,6 @@ data class Product(
     val content: String,
     val initPrice: Int,
     val newPrice: Int,
+    val amountInInv: Int
 )
 
