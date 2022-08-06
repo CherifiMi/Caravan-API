@@ -27,7 +27,7 @@ fun Application.configureRouting(database: CoroutineDatabase) {
 
         products(database.getCollection("products"))
 
-        uploadFile()
+        cats(database.getCollection("cats"))
     }}
 }
 
