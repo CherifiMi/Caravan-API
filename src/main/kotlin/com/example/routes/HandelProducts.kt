@@ -41,7 +41,7 @@ fun Route.products(collection: CoroutineCollection<Product>) {
         }
 
         // delete product by id
-        delete {
+        post("/delete") {
             call.parameters
             val requestBody = call.receive<Id>()
             val isSuccess = collection.deleteOneById(requestBody.id).wasAcknowledged()
