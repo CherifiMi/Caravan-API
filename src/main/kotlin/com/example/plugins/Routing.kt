@@ -39,7 +39,9 @@ fun Application.configureRouting(database: CoroutineDatabase) {
 
             val accountLink = AccountLink.create(params2)
 
-            call.respond(accountLink.url)
+            val res = accountLink.url
+
+            call.respond(res)
         }
     }
     //______________caravan api v1
