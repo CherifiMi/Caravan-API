@@ -39,29 +39,31 @@ import io.ktor.server.routing.*
     }
 }*/
 
-/*fun Route.accountlink() {
-    route("/accountlink") {
+/*
+fun Route.accountlink() {
+route("/accountlink") {
 
-        val params = AccountLinkCreateParams
-            .builder()
-            .setAccount("acct_1032D82eZvKYlo2C")
-            .setRefreshUrl("https://example.com/reauth")
-            .setReturnUrl("https://example.com/return")
-            .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
-            .build()
+val params = AccountLinkCreateParams
+.builder()
+.setAccount("acct_1032D82eZvKYlo2C")
+.setRefreshUrl("https://example.com/reauth")
+.setReturnUrl("https://example.com/return")
+.setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+.build()
 
-        val accountLink = AccountLink.create(params)
+val accountLink = AccountLink.create(params)
 
-        get {
-            call.respond(accountLink)
-        }
+get {
+call.respond(accountLink)
+}
 
-    }
-}*/
+}
+}
 
 fun Route.account() {
-    route("/account") {
+route("/account") {
 
 
-    }
 }
+}
+*/
