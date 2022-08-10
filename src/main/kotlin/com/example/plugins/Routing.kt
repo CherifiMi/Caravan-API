@@ -28,6 +28,8 @@ fun Application.configureRouting(database: CoroutineDatabase) {
         products(database.getCollection("products"))
 
         cats(database.getCollection("cats"))
+
+        account()
     }}
 }
 
