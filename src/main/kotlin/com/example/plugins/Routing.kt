@@ -29,7 +29,7 @@ fun Application.configureRouting(database: CoroutineDatabase) {
 
         cats(database.getCollection("cats"))
 
-        account()
+        //account()
     }}
 }
 
