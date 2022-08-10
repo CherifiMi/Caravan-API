@@ -5,7 +5,7 @@ val logback_version: String by project
 plugins {
     application
     kotlin("jvm") version "1.7.10"
-                id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
 }
 tasks {
     create("stage").dependsOn("installDist")
@@ -40,4 +40,7 @@ dependencies {
     // KMongo
     implementation("org.litote.kmongo:kmongo:4.4.0")
     implementation("org.litote.kmongo:kmongo-coroutine:4.4.0")
+
+    //Stripe
+    implementation("com.stripe:stripe-java:20.112.0")
 }
