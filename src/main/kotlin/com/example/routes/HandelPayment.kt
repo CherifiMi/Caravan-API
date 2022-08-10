@@ -14,15 +14,6 @@ import io.ktor.server.routing.*
 
 fun Route.stripe() {
     route("/payment") {
-
-
-        get {
-            call.respondText("Hello mito!!!!!!")
-        }
-        get("{id}") {
-
-        }
-
         post {
 
             val formParameters = call.receiveParameters()
@@ -48,23 +39,7 @@ fun Route.stripe() {
     }
 }
 
-fun Route.account() {
-    route("/account") {
-
-        val params = AccountCreateParams
-            .builder()
-            .setType(AccountCreateParams.Type.EXPRESS)
-            .build()
-
-
-
-        val account: Account = Account.create(params)
-
-        get {
-            call.respond(account)
-        }
-
-    }
+fun Route.accountlink() {
     route("/accountlink") {
 
         val params = AccountLinkCreateParams
@@ -79,6 +54,24 @@ fun Route.account() {
 
         get {
             call.respond(accountLink)
+        }
+
+    }
+}
+
+fun Route.account() {
+    route("/account") {
+
+        val params = AccountCreateParams
+            .builder()
+            .setType(AccountCreateParams.Type.EXPRESS)
+            .build()
+
+
+        val account: Account = Account.create(params)
+
+        get {
+            call.respond(account)
         }
 
     }
