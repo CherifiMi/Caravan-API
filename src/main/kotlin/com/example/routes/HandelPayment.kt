@@ -12,7 +12,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 
-fun Route.stripe() {
+/*fun Route.stripe() {
     route("/payment") {
         post {
 
@@ -37,9 +37,9 @@ fun Route.stripe() {
         }
 
     }
-}
+}*/
 
-fun Route.accountlink() {
+/*fun Route.accountlink() {
     route("/accountlink") {
 
         val params = AccountLinkCreateParams
@@ -57,22 +57,11 @@ fun Route.accountlink() {
         }
 
     }
-}
+}*/
 
 fun Route.account() {
     route("/account") {
 
-        val params = AccountCreateParams
-            .builder()
-            .setType(AccountCreateParams.Type.EXPRESS)
-            .build()
-
-
-        val account: Account = Account.create(params)
-
-        get {
-            call.respond(account)
-        }
 
     }
 }
