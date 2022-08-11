@@ -120,12 +120,13 @@ fun Route.sellers(
             call.parameters
             val requestBody = call.receive<Seller>()
 
-            val params = AccountCreateParams
-                .builder()
-                .setType(AccountCreateParams.Type.EXPRESS)
-                .build()
-
-            val account: Account = Account.create(params)
+            val account =
+                Account.create(
+                    AccountCreateParams
+                        .builder()
+                        .setType(AccountCreateParams.Type.EXPRESS)
+                        .build()
+                )
 
             val mySeller = Seller(
                 id = requestBody.id,
@@ -136,13 +137,12 @@ fun Route.sellers(
                 phone = requestBody.phone,
                 stripeId = account.id,
                 isActive = requestBody.isActive
-
             )
 
 
-            collection.insertOne(mySeller).wasAcknowledged()
-
-            collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
+            val suc = collection.insertOne(mySeller).wasAcknowledged()
+                    &&collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
+                .wasAcknowledged()
 
             val params2 = AccountLinkCreateParams
                 .builder()
@@ -152,9 +152,15 @@ fun Route.sellers(
                 .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
                 .build()
 
-            val accountLink = AccountLink.create(params2).url
+            val accountLink = AccountLink.create(params2)
 
-            call.respond(accountLink)
+            if (suc){
+                call.respond(accountLink)
+            }
+            else{
+                call.respond(suc)
+            }
+
         }
 
         // change seller
