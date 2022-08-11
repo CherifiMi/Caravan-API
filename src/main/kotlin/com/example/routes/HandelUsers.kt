@@ -94,22 +94,11 @@ fun Route.sellers(
 
         }
         //get by auth key
-        get("/auth") {
+        post("/auth") {
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
                 call.respond(collection.findOne(Seller::autheId eq requestBody.id).toString())
-            } catch (e: Exception) {
-                call.respondText("ERROR: " + e.toString())
-            }
-
-        }
-        //get by auth key
-        get("/id") {
-            try {
-                call.parameters
-                val requestBody = call.receive<Id>()
-                call.respond(collection.findOne(Seller::id eq requestBody.id).toString())
             } catch (e: Exception) {
                 call.respondText("ERROR: " + e.toString())
             }

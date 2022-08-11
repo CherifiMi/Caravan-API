@@ -7,6 +7,7 @@ data class Product(
     @BsonId
     val id: String= ObjectId().toString(),
     val sellerKey: String,
+    val sellerStripe: String,
     val imageUrls: List<String>,
     val name: String,
     val minOrder: String,
@@ -16,4 +17,3 @@ data class Product(
     val newPrice: Int,
     val amountInInv: Int
 )
-
