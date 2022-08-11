@@ -154,12 +154,7 @@ fun Route.sellers(
 
             val accountLink = AccountLink.create(params2)
 
-            if (suc){
-                call.respond(accountLink)
-            }
-            else{
-                call.respond(suc)
-            }
+            call.respond(suc)
 
         }
 
