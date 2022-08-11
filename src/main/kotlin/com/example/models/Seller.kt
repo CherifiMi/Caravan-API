@@ -5,7 +5,7 @@ import org.bson.types.ObjectId
 
 data class Seller(
     @BsonId
-    val id: String= ObjectId().toString(),
+    val id: String?= ObjectId().toString(),
     val owner: String,
     val brand: String,
     val type: String,

@@ -120,43 +120,47 @@ fun Route.sellers(
             call.parameters
             val requestBody = call.receive<Seller>()
 
-            /*val account =
+            val accountId =
                 Account.create(
                     AccountCreateParams
                         .builder()
                         .setType(AccountCreateParams.Type.EXPRESS)
                         .build()
-                )
+                ).id
 
             val params2 = AccountLinkCreateParams
                 .builder()
-                .setAccount(account.id)
+                .setAccount(accountId)
                 .setRefreshUrl("https://example.com/reauth")
                 .setReturnUrl("https://example.com/return")
                 .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
                 .build()
 
-            val accountLink = AccountLink.create(params2)
+            val accountLink = AccountLink.create(params2).url
 
             val mySeller = Seller(
-                id = requestBody.id,
+                id = null,
                 owner = requestBody.owner,
                 brand = requestBody.brand,
                 type = requestBody.type,
                 autheId = requestBody.autheId,
                 phone = requestBody.phone,
-                stripeId = account.id,
+                stripeId = accountId,
                 isActive = requestBody.isActive
-            )*/
+            )
 
 
-            val suc = collection.insertOne(requestBody).wasAcknowledged()
-                    &&collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
+            val suc = collection.insertOne(mySeller).wasAcknowledged()
+                    &&collection1.insertOne(UserIdToType(type = "seller", autheId = mySeller.autheId))
                 .wasAcknowledged()
 
 
-
-            call.respond(suc)
+            if (suc){
+                call.respond(accountLink)
+            }
+            else{
+                call.respond(suc)
+            }
 
         }
 
