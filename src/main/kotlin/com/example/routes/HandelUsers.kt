@@ -124,7 +124,6 @@ fun Route.sellers(
                 Account.create(
                     AccountCreateParams
                         .builder()
-                        .setCountry("INR")
                         .setType(AccountCreateParams.Type.EXPRESS)
                         .build()
                 ).id
