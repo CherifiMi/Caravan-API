@@ -98,7 +98,7 @@ fun Route.sellers(
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
-                call.respond(collection.findOne(Seller::autheId eq requestBody.id).toString())
+                call.respond(listOf(collection.findOne(Seller::autheId eq requestBody.id)))
             } catch (e: Exception) {
                 call.respondText("ERROR: " + e.toString())
             }
