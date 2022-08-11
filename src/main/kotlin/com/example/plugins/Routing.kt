@@ -1,10 +1,6 @@
 package com.example.plugins
 
 import com.example.routes.*
-import com.stripe.model.Account
-import com.stripe.model.AccountLink
-import com.stripe.param.AccountCreateParams
-import com.stripe.param.AccountLinkCreateParams
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -34,8 +30,7 @@ fun Application.configureRouting(database: CoroutineDatabase) {
 
             cats(database.getCollection("cats"))
 
-            //account()
-            //accountlink()
+            payment()
         }
     }
 }

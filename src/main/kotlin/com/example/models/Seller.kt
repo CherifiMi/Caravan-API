@@ -14,6 +14,3 @@ data class Seller(
     val stripeId: String,
     val isActive: Boolean
 )
-
-
-
