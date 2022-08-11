@@ -120,29 +120,13 @@ fun Route.sellers(
             call.parameters
             val requestBody = call.receive<Seller>()
 
-            val account =
+            /*val account =
                 Account.create(
                     AccountCreateParams
                         .builder()
                         .setType(AccountCreateParams.Type.EXPRESS)
                         .build()
                 )
-
-            val mySeller = Seller(
-                id = requestBody.id,
-                owner = requestBody.owner,
-                brand = requestBody.brand,
-                type = requestBody.type,
-                autheId = requestBody.autheId,
-                phone = requestBody.phone,
-                stripeId = account.id,
-                isActive = requestBody.isActive
-            )
-
-
-            val suc = collection.insertOne(mySeller).wasAcknowledged()
-                    &&collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
-                .wasAcknowledged()
 
             val params2 = AccountLinkCreateParams
                 .builder()
@@ -153,6 +137,24 @@ fun Route.sellers(
                 .build()
 
             val accountLink = AccountLink.create(params2)
+
+            val mySeller = Seller(
+                id = requestBody.id,
+                owner = requestBody.owner,
+                brand = requestBody.brand,
+                type = requestBody.type,
+                autheId = requestBody.autheId,
+                phone = requestBody.phone,
+                stripeId = account.id,
+                isActive = requestBody.isActive
+            )*/
+
+
+            val suc = collection.insertOne(requestBody).wasAcknowledged()
+                    &&collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
+                .wasAcknowledged()
+
+
 
             call.respond(suc)
 
