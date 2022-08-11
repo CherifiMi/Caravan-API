@@ -123,7 +123,7 @@ fun Route.sellers(
             val accountId =
                 Account.create(
                     AccountCreateParams
-                        .builder()
+                        .builder().setCountry("INR")
                         .setType(AccountCreateParams.Type.EXPRESS)
                         .build()
                 ).id
