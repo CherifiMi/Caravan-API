@@ -14,17 +14,30 @@ fun Route.payment() {
 
             val formParameters = call.receiveParameters()
 
-            val amount = formParameters["amount"]?.toLong()
+            val amount = formParameters["amount"]?.toInt()
             val currency = formParameters["currency"].toString()
+            val linked = formParameters["linked"].toString()
 
-            val params: PaymentIntentCreateParams =
-                PaymentIntentCreateParams.builder()
-                    .setAmount(amount)
-                    .setCurrency(currency)
-                    .build()
+            val am = amount ?: 1000
+           //val params =
+           //    PaymentIntentCreateParams.builder()
+           //        .setAmount(amount)
+           //        .setCurrency(currency)
+           //        .build()
 
-            val intent: PaymentIntent = PaymentIntent.create(params)
-            val clientSecret: String = intent.clientSecret
+
+            val transferDataParams: MutableMap<String, Any> = HashMap()
+            transferDataParams["destination"] = linked
+
+            val params: MutableMap<String, Any> = HashMap()
+            params["amount"] = am
+            params["currency"] = currency
+            params["application_fee_amount"] = am/2
+            params["transfer_data"] = transferDataParams
+
+            val intent = PaymentIntent.create(params)
+            val clientSecret = intent.clientSecret
+
             call.respond(clientSecret)
         }
     }
