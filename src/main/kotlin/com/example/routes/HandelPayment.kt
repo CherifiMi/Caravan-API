@@ -12,7 +12,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 
-/*fun Route.stripe() {
+fun Route.stripe() {
     route("/payment") {
         post {
 
@@ -37,33 +37,31 @@ import io.ktor.server.routing.*
         }
 
     }
-}*/
+}
 
 /*
-fun Route.accountlink() {
-route("/accountlink") {
 
-val params = AccountLinkCreateParams
-.builder()
-.setAccount("acct_1032D82eZvKYlo2C")
-.setRefreshUrl("https://example.com/reauth")
-.setReturnUrl("https://example.com/return")
-.setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
-.build()
+get("/pay") {
+            val params = AccountCreateParams
+                .builder()
+                .setType(AccountCreateParams.Type.EXPRESS)
+                .build()
 
-val accountLink = AccountLink.create(params)
+            val account: Account = Account.create(params)
 
-get {
-call.respond(accountLink)
-}
+            val params2 = AccountLinkCreateParams
+                .builder()
+                .setAccount(account.id)
+                .setRefreshUrl("https://example.com/reauth")
+                .setReturnUrl("https://example.com/return")
+                .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+                .build()
 
-}
-}
+            val accountLink = AccountLink.create(params2).url
 
-fun Route.account() {
-route("/account") {
+            val res = accountLink
 
+            call.respond(res)
+        }
 
-}
-}
 */

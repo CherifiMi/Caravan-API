@@ -11,6 +11,7 @@ data class Seller(
     val type: String,
     val autheId: String,
     val phone: String,
+    val stripeId: String,
     val isActive: Boolean
 )
 

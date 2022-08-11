@@ -1,6 +1,10 @@
 package com.example.routes
 
 import com.example.models.*
+import com.stripe.model.Account
+import com.stripe.model.AccountLink
+import com.stripe.param.AccountCreateParams
+import com.stripe.param.AccountLinkCreateParams
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -115,11 +119,42 @@ fun Route.sellers(
         post {
             call.parameters
             val requestBody = call.receive<Seller>()
-            val isSuccess =
-                collection.insertOne(requestBody).wasAcknowledged()
-                        && collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
-                    .wasAcknowledged()
-            call.respond(isSuccess)
+
+            val params = AccountCreateParams
+                .builder()
+                .setType(AccountCreateParams.Type.EXPRESS)
+                .build()
+
+            val account: Account = Account.create(params)
+
+            val mySeller = Seller(
+                id = requestBody.id,
+                owner = requestBody.owner,
+                brand = requestBody.brand,
+                type = requestBody.type,
+                autheId = requestBody.autheId,
+                phone = requestBody.phone,
+                stripeId = account.id,
+                isActive = requestBody.isActive
+
+            )
+
+
+            collection.insertOne(mySeller).wasAcknowledged()
+
+            collection1.insertOne(UserIdToType(type = "seller", autheId = requestBody.autheId))
+
+            val params2 = AccountLinkCreateParams
+                .builder()
+                .setAccount(account.id)
+                .setRefreshUrl("https://example.com/reauth")
+                .setReturnUrl("https://example.com/return")
+                .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+                .build()
+
+            val accountLink = AccountLink.create(params2).url
+
+            call.respond(accountLink)
         }
 
         // change seller
@@ -182,7 +217,8 @@ fun Route.reps(
             val requestBody = call.receive<Rep>()
             val isSuccess =
                 collection.insertOne(requestBody).wasAcknowledged()
-                        && collection1.insertOne(UserIdToType(type = "rep", autheId = requestBody.autheId)).wasAcknowledged()
+                        && collection1.insertOne(UserIdToType(type = "rep", autheId = requestBody.autheId))
+                    .wasAcknowledged()
             call.respond(isSuccess)
         }
 

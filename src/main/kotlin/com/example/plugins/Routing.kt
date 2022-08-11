@@ -20,29 +20,6 @@ fun Application.configureRouting(database: CoroutineDatabase) {
         get("/") {
             call.respondText("Hello Mito!")
         }
-
-        get("/pay") {
-            val params = AccountCreateParams
-                .builder()
-                .setType(AccountCreateParams.Type.EXPRESS)
-                .build()
-
-            val account: Account = Account.create(params)
-
-            val params2 = AccountLinkCreateParams
-                .builder()
-                .setAccount(account.id)
-                .setRefreshUrl("https://example.com/reauth")
-                .setReturnUrl("https://example.com/return")
-                .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
-                .build()
-
-            val accountLink = AccountLink.create(params2)
-
-            val res = accountLink.url
-
-            call.respond(res)
-        }
     }
     //______________caravan api v1
     routing {
