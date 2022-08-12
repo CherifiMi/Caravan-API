@@ -18,24 +18,30 @@ fun Route.payment() {
             val currency = formParameters["currency"].toString()
             val linked = formParameters["linked"].toString()
 
-            val am = amount ?: 1000
-           //val params =
-           //    PaymentIntentCreateParams.builder()
-           //        .setAmount(amount)
-           //        .setCurrency(currency)
-           //        .build()
-
-            val  paymentMethodTypes: ArrayList<String> = arrayListOf("card")
-
             val transferDataParams: MutableMap<String, Any> = HashMap()
             transferDataParams["destination"] = linked
 
-            val params: MutableMap<String, Any> = HashMap()
-            params["amount"] = am
-            params["payment_method_types"] = paymentMethodTypes
-            params["currency"] = currency
-            params["application_fee_amount"] = am/2
-            params["transfer_data"] = transferDataParams
+            val am = amount ?: 1000
+
+           val params =
+               PaymentIntentCreateParams.builder()
+                   .setAmount(am.toLong())
+                   .putExtraParam("transfer_data", transferDataParams)
+                   .setCurrency(currency)
+                   .build()
+
+           //val  paymentMethodTypes: ArrayList<String> = arrayListOf("card")
+
+           //val transferDataParams: MutableMap<String, Any> = HashMap()
+           //transferDataParams["destination"] = linked
+
+           //val params: MutableMap<String, Any> = HashMap()
+           //params["amount"] = am
+           //params["payment_method_types"] = paymentMethodTypes
+           //params["currency"] = currency
+           //params["application_fee_amount"] = am/2
+           //params["transfer_data"] = transferDataParams
+
 
             val intent = PaymentIntent.create(params)
             val clientSecret = intent.clientSecret
