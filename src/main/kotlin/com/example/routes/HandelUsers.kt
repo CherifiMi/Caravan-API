@@ -120,7 +120,7 @@ fun Route.sellers(
             val params2 = AccountLinkCreateParams
                 .builder()
                 .setAccount(accountId)
-                .setRefreshUrl(getNewUrl(accountId))
+                .setRefreshUrl("https://example.com/return")
                 .setReturnUrl("https://example.com/return")
                 .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
                 .build()
@@ -176,8 +176,7 @@ fun getNewUrl(accountId: String?): String? {
     val params2 = AccountLinkCreateParams
         .builder()
         .setAccount(accountId)
-        .setRefreshUrl("https://example.com/return")
-        //.setRefreshUrl(getNewUrl(accountId))
+        .setRefreshUrl(getNewUrl(accountId))
         .setReturnUrl("https://example.com/return")
         .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
         .build()
