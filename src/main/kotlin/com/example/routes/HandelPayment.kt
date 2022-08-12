@@ -28,6 +28,12 @@ fun Route.payment() {
                    .setAmount(am.toLong())
                    .putExtraParam("transfer_data", transferDataParams)
                    .setCurrency(currency)
+                   .setAutomaticPaymentMethods(
+                       PaymentIntentCreateParams.AutomaticPaymentMethods
+                           .builder()
+                           .setEnabled(true)
+                           .build()
+                   )
                    .build()
 
            //val  paymentMethodTypes: ArrayList<String> = arrayListOf("card")
