@@ -25,12 +25,14 @@ fun Route.payment() {
            //        .setCurrency(currency)
            //        .build()
 
+            val  paymentMethodTypes: ArrayList<String> = arrayListOf("card")
 
             val transferDataParams: MutableMap<String, Any> = HashMap()
             transferDataParams["destination"] = linked
 
             val params: MutableMap<String, Any> = HashMap()
             params["amount"] = am
+            params["payment_method_types"] = paymentMethodTypes
             params["currency"] = currency
             params["application_fee_amount"] = am/2
             params["transfer_data"] = transferDataParams
