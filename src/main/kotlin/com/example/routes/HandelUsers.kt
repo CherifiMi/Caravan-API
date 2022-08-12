@@ -79,6 +79,40 @@ fun Route.buyers(
     }
 }
 
+
+val accountId =
+    Account.create(
+        AccountCreateParams
+            .builder()
+            .setType(AccountCreateParams.Type.EXPRESS)
+            .build()
+    ).id
+
+val params2 = AccountLinkCreateParams
+    .builder()
+    .setAccount(accountId)
+    .setRefreshUrl(makeNewId(accountId))
+    .setReturnUrl("")
+    .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+    .build()
+
+val accountLink = AccountLink.create(params2).url
+
+fun makeNewId(ai: String): String{
+
+    val params2 = AccountLinkCreateParams
+        .builder()
+        .setAccount(ai)
+        .setRefreshUrl("")
+        .setReturnUrl("")
+        .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+        .build()
+
+    val accountLink = AccountLink.create(params2).url
+
+    return accountLink
+}
+
 fun Route.sellers(
     collection: CoroutineCollection<Seller>,
     collection1: CoroutineCollection<UserIdToType>
@@ -109,23 +143,7 @@ fun Route.sellers(
             call.parameters
             val requestBody = call.receive<Seller>()
 
-            val accountId =
-                Account.create(
-                    AccountCreateParams
-                        .builder()
-                        .setType(AccountCreateParams.Type.EXPRESS)
-                        .build()
-                ).id
 
-            val params2 = AccountLinkCreateParams
-                .builder()
-                .setAccount(accountId)
-                .setRefreshUrl("https://example.com/reauth")
-                .setReturnUrl("https://example.com/return")
-                .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
-                .build()
-
-            val accountLink = AccountLink.create(params2).url
 
             val mySeller = Seller(
                 id = null,
@@ -170,6 +188,8 @@ fun Route.sellers(
         }
     }
 }
+
+
 
 fun Route.reps(
     collection: CoroutineCollection<Rep>,
