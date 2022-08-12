@@ -30,13 +30,15 @@ fun Route.buyers(
         }
         //get by auth key
         post("/auth") {
+
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
-                call.respond(listOf(collection.findOne(Buyer::autheId eq requestBody.id).toString()))
+                call.respond(listOf(collection.findOne(Buyer::autheId eq requestBody.id)))
             } catch (e: Exception) {
                 call.respondText("ERROR: " + e.toString())
             }
+
 
         }
 
