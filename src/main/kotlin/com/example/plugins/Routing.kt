@@ -31,6 +31,8 @@ fun Application.configureRouting(database: CoroutineDatabase) {
             cats(database.getCollection("cats"))
 
             payment()
+
+            stripe()
         }
     }
 }

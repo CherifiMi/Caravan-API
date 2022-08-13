@@ -56,3 +56,38 @@ fun Route.payment() {
         }
     }
 }
+
+fun Route.stripe() {
+
+    route("/stripe") {
+        get {
+            call.respondText("Hello mito!!!!!!")
+        }
+        get("{id}") {
+
+        }
+
+        post {
+
+            val formParameters = call.receiveParameters()
+
+            val amount = formParameters["amount"]?.toLong()
+            val currency = formParameters["currency"].toString()
+
+            val params: PaymentIntentCreateParams =
+                PaymentIntentCreateParams.builder()
+                    .setAmount(amount)
+                    .setCurrency(currency)
+                    .build()
+
+            val intent: PaymentIntent = PaymentIntent.create(params)
+            var clientSecret: String = intent.clientSecret
+            call.respond(clientSecret)
+        }
+
+        delete("{id}") {
+
+        }
+    }
+}
+
