@@ -58,7 +58,7 @@ fun linkById(accountId: String): String {
     val params2 = AccountLinkCreateParams
         .builder()
         .setAccount(accountId)
-        .setRefreshUrl(linkById(accountId))
+        .setRefreshUrl("https://example.com/return")
         .setReturnUrl("https://example.com/return")
         .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
         .build()
