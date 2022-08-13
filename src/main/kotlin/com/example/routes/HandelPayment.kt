@@ -71,7 +71,17 @@ fun Route.acclink() {
             val formParameters = call.receiveParameters()
             val accountId = formParameters["id"] ?: ""
 
-            call.respond(linkById(accountId))
+            val params2 = AccountLinkCreateParams
+                .builder()
+                .setAccount(accountId)
+                .setRefreshUrl(linkById(accountId))
+                .setReturnUrl("https://example.com/return")
+                .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+                .build()
+
+           val link =  AccountLink.create(params2).url
+
+            call.respond(link)
         }
         post ("payout"){
             val formParameters = call.receiveParameters()
