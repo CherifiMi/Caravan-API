@@ -74,10 +74,22 @@ fun Route.stripe() {
             val amount = formParameters["amount"]?.toLong()
             val currency = formParameters["currency"].toString()
 
-            val params: PaymentIntentCreateParams =
+            //val params: PaymentIntentCreateParams =
+            //    PaymentIntentCreateParams.builder()
+            //        .setAmount(amount)
+            //        .setCurrency(currency)
+            //        .build()
+
+            val params =
                 PaymentIntentCreateParams.builder()
                     .setAmount(amount)
                     .setCurrency(currency)
+                    .setAutomaticPaymentMethods(
+                        PaymentIntentCreateParams.AutomaticPaymentMethods
+                            .builder()
+                            .setEnabled(true)
+                            .build()
+                    )
                     .build()
 
             val intent: PaymentIntent = PaymentIntent.create(params)
