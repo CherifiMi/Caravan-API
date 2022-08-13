@@ -26,7 +26,7 @@ fun Route.payment() {
            val params =
                PaymentIntentCreateParams.builder()
                    .setAmount(am.toLong())
-                   //.putExtraParam("transfer_data", transferDataParams)
+                   .putExtraParam("transfer_data", transferDataParams)
                    .setCurrency(currency)
                    .setAutomaticPaymentMethods(
                        PaymentIntentCreateParams.AutomaticPaymentMethods
