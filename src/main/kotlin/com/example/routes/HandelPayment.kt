@@ -54,17 +54,7 @@ fun Route.payment() {
     }
 }
 
-fun linkById(accountId: String): String {
-    val params2 = AccountLinkCreateParams
-        .builder()
-        .setAccount(accountId)
-        .setRefreshUrl("https://example.com/return")
-        .setReturnUrl("https://example.com/return")
-        .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
-        .build()
 
-    return AccountLink.create(params2).url
-}
 fun Route.acclink() {
     route("/accountLink") {
         post ("/link"){
@@ -74,7 +64,7 @@ fun Route.acclink() {
             val params2 = AccountLinkCreateParams
                 .builder()
                 .setAccount(accountId)
-                .setRefreshUrl(linkById(accountId))
+                .setRefreshUrl("https://example.com/return")
                 .setReturnUrl("https://example.com/return")
                 .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
                 .build()
