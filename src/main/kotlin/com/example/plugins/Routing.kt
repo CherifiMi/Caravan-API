@@ -32,6 +32,8 @@ fun Application.configureRouting(database: CoroutineDatabase) {
 
             payment()
 
+            acclink()
+
             stripe()
         }
     }
