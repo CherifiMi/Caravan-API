@@ -105,7 +105,7 @@ fun Route.sellers(
                 Account.create(
                     AccountCreateParams
                         .builder()
-                        .setType(AccountCreateParams.Type.EXPRESS)
+                        .setType(AccountCreateParams.Type.STANDARD)
                         .build()
                 ).id
 
