@@ -34,7 +34,6 @@ fun Application.configureRouting(database: CoroutineDatabase) {
 
             acclink()
 
-            stripe()
         }
     }
 }
