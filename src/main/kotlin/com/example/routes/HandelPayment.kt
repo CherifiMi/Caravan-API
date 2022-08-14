@@ -53,7 +53,7 @@ fun Route.acclink() {
                     .setAccount(accountId)
                     .setRefreshUrl("https://example.com/return")
                     .setReturnUrl("https://example.com/return")
-                    .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+                    .setType(AccountLinkCreateParams.Type.ACCOUNT_UPDATE)
                     .build()
 
                 return AccountLink.create(params2).url
