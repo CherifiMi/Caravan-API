@@ -40,7 +40,7 @@ fun Route.orders(collection: CoroutineCollection<Order>){
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
-                call.respond(collection.find(Order::sellerId eq requestBody.id).toList())
+                call.respond(collection.find(Order::seller eq requestBody.id).toList())
             } catch (e: Exception) {
                 call.respondText("ERROR: $e")
             }

@@ -8,7 +8,7 @@ data class Order(
     val id: String= ObjectId().toString(),
     val productId: String,
     val amount: Int,
-    val buyerId: String,
-    val sellerId: String
+    val buyer: String,
+    val seller: String
 )
 
