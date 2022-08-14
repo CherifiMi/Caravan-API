@@ -34,6 +34,7 @@ fun Application.configureRouting(database: CoroutineDatabase) {
 
             acclink()
 
+            orders(database.getCollection("orders"))
         }
     }
 }
