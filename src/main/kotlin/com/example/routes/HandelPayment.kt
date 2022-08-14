@@ -88,7 +88,7 @@ fun Route.acclink() {
         post ("payout"){
             val formParameters = call.receiveParameters()
             val accountId = formParameters["id"] ?: ""
-            val canPayout = Account.retrieve(accountId).chargesEnabled
+            val canPayout = Account.retrieve(accountId)
             call.respond(canPayout)
         }
     }
