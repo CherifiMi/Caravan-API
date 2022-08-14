@@ -22,20 +22,6 @@ fun Route.payment() {
             val currency = formParameters["currency"].toString()
             val linked = formParameters["linked"].toString()
 
-
-            //val params =
-            //    PaymentIntentCreateParams.builder()
-            //        .setAmount(am.toLong())
-            //        .putExtraParam("transfer_data", transferDataParams)
-            //        .setCurrency(currency)
-            //        .setAutomaticPaymentMethods(
-            //            PaymentIntentCreateParams.AutomaticPaymentMethods
-            //                .builder()
-            //                .setEnabled(true)
-            //                .build()
-            //        )
-            //        .build()
-
             val paymentMethodTypes: ArrayList<String> = arrayListOf("card")
 
             val params: MutableMap<String, Any> = HashMap()
@@ -78,7 +64,7 @@ fun Route.acclink() {
                 .setAccount(accountId)
                 .setRefreshUrl(makeUrl(accountId))
                 .setReturnUrl("https://example.com/return")
-                .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
+                .setType(AccountLinkCreateParams.Type.ACCOUNT_UPDATE)
                 .build()
 
            val link =  AccountLink.create(params2).url
@@ -90,52 +76,6 @@ fun Route.acclink() {
             val accountId = formParameters["id"] ?: ""
             val canPayout = Account.retrieve(accountId).payoutsEnabled
             call.respond(canPayout)
-        }
-    }
-}
-
-fun Route.stripe() {
-
-    route("/stripe") {
-        get {
-            call.respondText("Hello mito!!!!!!")
-        }
-        get("{id}") {
-
-        }
-
-        post {
-
-            val formParameters = call.receiveParameters()
-
-            val amount = formParameters["amount"]?.toLong()
-            val currency = formParameters["currency"].toString()
-
-            //val params: PaymentIntentCreateParams =
-            //    PaymentIntentCreateParams.builder()
-            //        .setAmount(amount)
-            //        .setCurrency(currency)
-            //        .build()
-
-            val params =
-                PaymentIntentCreateParams.builder()
-                    .setAmount(amount)
-                    .setCurrency(currency)
-                    .setAutomaticPaymentMethods(
-                        PaymentIntentCreateParams.AutomaticPaymentMethods
-                            .builder()
-                            .setEnabled(true)
-                            .build()
-                    )
-                    .build()
-
-            val intent: PaymentIntent = PaymentIntent.create(params)
-            val clientSecret: String = intent.clientSecret
-            call.respond(clientSecret)
-        }
-
-        delete("{id}") {
-
         }
     }
 }
