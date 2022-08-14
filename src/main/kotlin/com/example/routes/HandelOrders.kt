@@ -11,6 +11,14 @@ import org.litote.kmongo.eq
 
 fun Route.orders(collection: CoroutineCollection<Order>){
     route("/orders"){
+        get {
+            try {
+                call.parameters
+                call.respond(collection.find().toList())
+            } catch (e: Exception) {
+                call.respondText("ERROR: $e")
+            }
+        }
         //create new order
         post ("/make"){
             call.parameters
