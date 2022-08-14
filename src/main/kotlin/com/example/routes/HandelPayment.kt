@@ -45,7 +45,7 @@ fun Route.payment() {
             //params["application_fee_amount"] = ((amount*2.5f)/100f).toInt()
 
             val requestOptions = RequestOptions.builder().setStripeAccount(linked).build()
-            val paymentIntent = PaymentIntent.create(params, requestOptions)
+            val paymentIntent = PaymentIntent.create(params)
 
             val clientSecret = paymentIntent.clientSecret
 
