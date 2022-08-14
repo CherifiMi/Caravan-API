@@ -28,7 +28,7 @@ fun Route.orders(collection: CoroutineCollection<Order>){
         }
 
         // delete order by id
-        delete("/delete") {
+        post("/delete") {
             call.parameters
             val requestBody = call.receive<Id>()
             val isSuccess = collection.deleteOneById(requestBody.id).wasAcknowledged()
