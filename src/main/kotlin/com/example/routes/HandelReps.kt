@@ -31,7 +31,7 @@ fun Route.reps(
             try {
                 call.parameters
                 val requestBody = call.receive<Id>()
-                call.respond(collection.findOne(Rep::autheId eq requestBody.id).toString())
+                call.respond(listOf(collection.findOne(Rep::autheId eq requestBody.id)))
             } catch (e: Exception) {
                 call.respondText("ERROR: " + e.toString())
             }
