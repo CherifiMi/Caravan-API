@@ -34,32 +34,23 @@ fun Route.orders(collection: CoroutineCollection<Order>, collectionP: CoroutineC
             call.parameters
             val requestBody = call.receive<Order>()
 
-            // get the current product
-            val currentProduct =  collectionP.findOne(Product::id eq requestBody.productId)
+            val isSuccess = collection.insertOne(requestBody).wasAcknowledged()
 
-            // make a new product from the old one
-            val changedProduct = currentProduct?.copy(amountInInv = currentProduct.amountInInv - requestBody.amount)
-
-            //replace the old one with the new one
-
-
-           //val isSuccess =
-           //    collection.insertOne(requestBody).wasAcknowledged()
-           //            //&& collectionP.replaceOne(changedProduct).wasAcknowledged()
-
-            runBlocking {
-
-                async {
-                    collection.insertOne(requestBody).wasAcknowledged()
-                }
-                async {
-                    collectionP.replaceOne(changedProduct!!).wasAcknowledged()
-                }
-            }
-
-            call.respond(listOf(currentProduct, changedProduct))
+            call.respond(isSuccess)
         }
 
+        //lower inv
+        post("/lowerinv") {
+            call.parameters
+            val requestBody = call.receive<Order>()
+
+            val currentProduct =  collectionP.findOne(Product::id eq requestBody.productId)
+            val changedProduct = currentProduct?.copy(amountInInv = currentProduct.amountInInv - requestBody.amount)
+
+            val isSuccess = collectionP.replaceOne(changedProduct!!).wasAcknowledged()
+
+            call.respond(isSuccess)
+        }
 
         // delete order by id
         post("/delete") {
