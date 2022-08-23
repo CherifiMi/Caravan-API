@@ -7,6 +7,8 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.replaceOne
 import org.litote.kmongo.eq
@@ -45,8 +47,15 @@ fun Route.orders(collection: CoroutineCollection<Order>, collectionP: CoroutineC
            //    collection.insertOne(requestBody).wasAcknowledged()
            //            //&& collectionP.replaceOne(changedProduct).wasAcknowledged()
 
-            collection.insertOne(requestBody).wasAcknowledged()
-            collectionP.replaceOne(changedProduct!!).wasAcknowledged()
+            runBlocking {
+
+                async {
+                    collection.insertOne(requestBody).wasAcknowledged()
+                }
+                async {
+                    collectionP.replaceOne(changedProduct!!).wasAcknowledged()
+                }
+            }
 
             call.respond(listOf(currentProduct, changedProduct))
         }
