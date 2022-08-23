@@ -21,28 +21,29 @@ fun Route.orders(collection: CoroutineCollection<Order>, collectionP: CoroutineC
                 call.respondText("ERROR: $e")
             }
         }
+
+        //oldTest.copy(age = oldTest.age - 2, name = "yooo")
+        //collectionP.replaceOne(Product::id eq requestBody.productId, newProduct).wasAcknowledged()
+        //val thisProduct: Product = collectionP.findOne(Product::id eq requestBody.productId)!!
+        //val newProduct = thisProduct?.copy(amountInInv = thisProduct.amountInInv.minus(requestBody.amount))
+
         //create new order
         post("/make") {
             call.parameters
             val requestBody = call.receive<Order>()
 
-            //oldTest.copy(age = oldTest.age - 2, name = "yooo")
-            //collectionP.replaceOne(Product::id eq requestBody.productId, newProduct).wasAcknowledged()
-            //val thisProduct: Product = collectionP.findOne(Product::id eq requestBody.productId)!!
-            //val newProduct = thisProduct?.copy(amountInInv = thisProduct.amountInInv.minus(requestBody.amount))
-
             // get the current product
             val currentProduct: Product =  collectionP.findOne(Product::id eq requestBody.productId)!!
 
             // make a new product from the old one
-            val changedProduct = currentProduct.copy(amountInInv = currentProduct.amountInInv - requestBody.amount)
+            //val changedProduct = currentProduct.copy(amountInInv = currentProduct.amountInInv - requestBody.amount)
 
             //replace the old one with the new one
 
 
             val isSuccess =
-                collection.insertOne(requestBody).wasAcknowledged() &&
-                        collectionP.replaceOne(changedProduct).wasAcknowledged()
+                collection.insertOne(requestBody).wasAcknowledged()
+                        //&& collectionP.replaceOne(changedProduct).wasAcknowledged()
 
             call.respond(isSuccess)
         }
