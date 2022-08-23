@@ -45,6 +45,8 @@ fun Route.orders(collection: CoroutineCollection<Order>, collectionP: CoroutineC
            //    collection.insertOne(requestBody).wasAcknowledged()
            //            //&& collectionP.replaceOne(changedProduct).wasAcknowledged()
 
+            collectionP.replaceOne(changedProduct!!).wasAcknowledged()
+
             call.respond(listOf(currentProduct, changedProduct))
         }
 
