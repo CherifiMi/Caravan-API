@@ -30,12 +30,10 @@ fun Route.orders(collection: CoroutineCollection<Order>, collectionP: CoroutineC
         //val newProduct = thisProduct?.copy(amountInInv = thisProduct.amountInInv.minus(requestBody.amount))
 
         //create new order
-        post("/make") {
+        post ("/make"){
             call.parameters
             val requestBody = call.receive<Order>()
-
             val isSuccess = collection.insertOne(requestBody).wasAcknowledged()
-
             call.respond(isSuccess)
         }
 
