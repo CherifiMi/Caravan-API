@@ -41,9 +41,9 @@ fun Route.orders(collection: CoroutineCollection<Order>, collectionP: CoroutineC
             //replace the old one with the new one
 
 
-            val isSuccess =
-                collection.insertOne(requestBody).wasAcknowledged()
-                        //&& collectionP.replaceOne(changedProduct).wasAcknowledged()
+           //val isSuccess =
+           //    collection.insertOne(requestBody).wasAcknowledged()
+           //            //&& collectionP.replaceOne(changedProduct).wasAcknowledged()
 
             call.respond(listOf(changedProduct))
         }
