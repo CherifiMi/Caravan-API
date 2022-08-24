@@ -14,7 +14,8 @@ import org.litote.kmongo.reactivestreams.KMongo
 val client = KMongo
     .createClient(
         //"mongodb+srv://mito:cherifi2003@mitocluster.bpzkl.mongodb.net/caravan_db?retryWrites=true&w=majority"
-        "mongodb+srv://mito:cherifi2003@caravancluster.ztgh797.mongodb.net/caravan_db?retryWrites=true&w=majority"
+        //"mongodb+srv://mito:cherifi2003@caravancluster.ztgh797.mongodb.net/caravan_db?retryWrites=true&w=majority"
+        "mongodb+srv://mito:cherifi2003@caravancluster.ztgh797.mongodb.net/?retryWrites=true&w=majority"
     ).coroutine
 val database = client.getDatabase("caravan_db")
 fun main() {
