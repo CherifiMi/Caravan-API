@@ -1,5 +1,6 @@
 package com.example.routes
 
+import com.example.models.Id
 import com.stripe.model.Account
 import com.stripe.model.AccountLink
 import com.stripe.model.PaymentIntent
@@ -42,8 +43,9 @@ fun Route.payment() {
 fun Route.acclink() {
     route("/accountLink") {
         post {
-            val formParameters = call.receiveParameters()
-            val accountId = formParameters["id"] ?: ""
+            call.parameters
+            val requestBody = call.receive<Id>()
+            val accountId = requestBody.id
 
             fun makeUrl(accountId: String): String? {
                 val params2 = AccountLinkCreateParams
