@@ -5,7 +5,6 @@ import com.stripe.model.AccountLink
 import com.stripe.model.PaymentIntent
 import com.stripe.net.RequestOptions
 import com.stripe.param.AccountLinkCreateParams
-import com.stripe.param.PaymentIntentCreateParams
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -40,7 +39,6 @@ fun Route.payment() {
     }
 }
 
-
 fun Route.acclink() {
     route("/accountLink") {
         post {
@@ -67,16 +65,17 @@ fun Route.acclink() {
                 .setType(AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING)
                 .build()
 
-           val link =  AccountLink.create(params2).url
-
-            call.respond(link)
-        }
-        post ("payout"){
-            val formParameters = call.receiveParameters()
-            val accountId = formParameters["id"] ?: ""
             val canPayout = Account.retrieve(accountId).payoutsEnabled
-            call.respond(canPayout)
+            val link = AccountLink.create(params2).url
+
+            call.respond(listOf(canPayout, link))
         }
+        //post ("payout"){
+        //    val formParameters = call.receiveParameters()
+        //    val accountId = formParameters["id"] ?: ""
+        //    val canPayout = Account.retrieve(accountId).payoutsEnabled
+        //    call.respond(canPayout)
+        //}
     }
 }
 
